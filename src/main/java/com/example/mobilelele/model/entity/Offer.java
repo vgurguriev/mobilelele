@@ -20,6 +20,9 @@ public class Offer extends BaseEntity {
     private int mileage;
 
     @Column(nullable = false)
+    private String description;
+
+    @Column(nullable = false)
     private BigDecimal price;
 
     @Column(nullable = false)
@@ -97,12 +100,21 @@ public class Offer extends BaseEntity {
         this.seller = seller;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     @Override
     public String toString() {
         return "Offer{" +
                 "engine=" + engine +
                 ", imageURL='" + imageURL + '\'' +
                 ", mileage=" + mileage +
+                ", description='" + description + '\'' +
                 ", price=" + price +
                 ", transmission=" + transmission +
                 ", year=" + year +
