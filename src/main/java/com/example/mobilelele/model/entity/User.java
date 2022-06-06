@@ -11,16 +11,19 @@ public class User extends BaseEntity {
     @Column(nullable = false)
     private String email;
 
-    private String password;
-
+    @Column(name = "first_name")
     private String firstName;
 
+    @Column(name = "last_name")
     private String lastName;
 
-    private boolean isActive;
-
+    @Column(name = "image_url")
     private String imageUrl;
 
+    @Column(name = "is_active")
+    private boolean isActive;
+
+    private String password;
     @ManyToMany(fetch = FetchType.EAGER)
     private List<UserRole> userRoles = new ArrayList<>();
 
