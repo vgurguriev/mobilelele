@@ -1,6 +1,7 @@
 package com.example.mobilelele.service;
 
 import com.example.mobilelele.model.dto.UserLoginDTO;
+import com.example.mobilelele.model.dto.UserRegisterDTO;
 import com.example.mobilelele.model.entity.User;
 import com.example.mobilelele.repository.UserRepository;
 
@@ -24,6 +25,19 @@ public class UserService {
         this.userRepository = userRepository;
         this.currentUser = currentUser;
         this.passwordEncoder = passwordEncoder;
+    }
+
+    public void registerAndLogin(UserRegisterDTO userRegisterDTO) {
+        User newUser = new User()
+                .setActive(true)
+                .setEmail(userRegisterDTO.getEmail())
+                .setFirstName(userRegisterDTO.getFirstName())
+                .setLastName(userRegisterDTO.getLastName())
+                .setPassword(passwordEncoder.encode(userRegisterDTO.getPassword()));
+
+        userRepository.save(newUser);
+
+        login(newUser);
     }
 
     public boolean login(UserLoginDTO userLoginDTO) {

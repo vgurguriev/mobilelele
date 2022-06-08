@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
 
 <head>
       <meta charset="UTF-8">
@@ -67,7 +68,8 @@
 
 <div class="container">
     <h2 class="text-center text-white">Register User</h2>
-    <form method="POST" 
+    <form   th:action="@{/users/register}"
+            th:method="post"
           class="main-form mx-auto col-md-8 d-flex flex-column justify-content-center">
         <div class="row">
             <div class="form-group col-md-6 mb-3">
@@ -81,7 +83,7 @@
             <div class="form-group col-md-6 mb-3">
                 <label for="lastName" class="text-white font-weight-bold">Last Name</label>
                 <input id="lastName" name="lastName" type="text" min="2" max="20" class="form-control"
-                       placeholder="First name"/>
+                       placeholder="Last name"/>
                 <p class="errors alert alert-danger">
                     Last name is required.
                 </p>
@@ -91,7 +93,7 @@
             <div class="form-group col-md-6 mb-3">
                 <label for="email" class="text-white font-weight-bold">Username</label>
                 <input id="email" name="email" type="email" min="2" max="20" class="form-control"
-                       placeholder="First name"/>
+                       placeholder="Email"/>
                 <p class="errors alert alert-danger">
                     Username is required.
                 </p>
@@ -108,7 +110,7 @@
         <div class="form-group">
             <label for="confirmPassword" class="text-white font-weight-bold">Password</label>
             <input id="confirmPassword" name="confirmPassword" type="password" min="2" max="20" class="form-control"
-                   placeholder="Password"/>
+                   placeholder="Confirm password"/>
             <p class="errors alert alert-danger">
                 Password should match.
             </p>
@@ -117,7 +119,7 @@
         <div class="row">
             <div class="col col-md-4">
                 <div class="button-holder d-flex">
-                    <input type="submit" class="btn btn-info btn-lg" value="Submit Offer"/>
+                    <input type="submit" class="btn btn-info btn-lg" value="Register"/>
                 </div>
             </div>
         </div>
