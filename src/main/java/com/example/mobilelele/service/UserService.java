@@ -3,6 +3,7 @@ package com.example.mobilelele.service;
 import com.example.mobilelele.model.dto.UserLoginDTO;
 import com.example.mobilelele.model.dto.UserRegisterDTO;
 import com.example.mobilelele.model.entity.User;
+import com.example.mobilelele.model.mapper.UserMapper;
 import com.example.mobilelele.repository.UserRepository;
 
 import com.example.mobilelele.user.CurrentUser;
@@ -21,18 +22,17 @@ public class UserService {
     private CurrentUser currentUser;
     private final PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository userRepository, CurrentUser currentUser, PasswordEncoder passwordEncoder) {
+    private final UserMapper userMapper;
+
+    public UserService(UserRepository userRepository, CurrentUser currentUser, PasswordEncoder passwordEncoder, UserMapper userMapper) {
         this.userRepository = userRepository;
         this.currentUser = currentUser;
         this.passwordEncoder = passwordEncoder;
+        this.userMapper = userMapper;
     }
 
     public void registerAndLogin(UserRegisterDTO userRegisterDTO) {
-        User newUser = new User()
-                .setActive(true)
-                .setEmail(userRegisterDTO.getEmail())
-                .setFirstName(userRegisterDTO.getFirstName())
-                .setLastName(userRegisterDTO.getLastName())
+        User newUser = userMapper.userDtoToUserEntity(userRegisterDTO)
                 .setPassword(passwordEncoder.encode(userRegisterDTO.getPassword()));
 
         userRepository.save(newUser);
