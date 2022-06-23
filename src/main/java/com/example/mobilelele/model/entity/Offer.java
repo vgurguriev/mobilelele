@@ -1,8 +1,7 @@
 package com.example.mobilelele.model.entity;
 
-import com.example.mobilelele.model.entity.enums.EngineEnum;
-import com.example.mobilelele.model.entity.enums.TransmissionEnum;
-import org.hibernate.procedure.spi.ParameterRegistrationImplementor;
+import com.example.mobilelele.model.enums.EngineEnum;
+import com.example.mobilelele.model.enums.TransmissionEnum;
 
 import javax.persistence.*;
 import java.math.BigDecimal;

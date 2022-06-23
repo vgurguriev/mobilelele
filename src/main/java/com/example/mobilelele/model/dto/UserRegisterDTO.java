@@ -1,11 +1,17 @@
 package com.example.mobilelele.model.dto;
 
+import com.example.mobilelele.model.validation.FieldMatch;
 import com.example.mobilelele.model.validation.UniqueUserEmail;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
+@FieldMatch(
+        first = "password",
+        second = "confirmPassword",
+        message = "Passwords do not match."
+)
 public class UserRegisterDTO {
     @NotEmpty(message = "User email should be provided.")
     @Email(message = "User email should be valid.")
