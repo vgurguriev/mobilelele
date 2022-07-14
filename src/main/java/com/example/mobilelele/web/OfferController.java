@@ -3,6 +3,8 @@ package com.example.mobilelele.web;
 import com.example.mobilelele.model.dto.AddOfferDTO;
 import com.example.mobilelele.service.BrandService;
 import com.example.mobilelele.service.OfferService;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -41,17 +43,18 @@ public class OfferController {
     @PostMapping("/offers/add")
     public String addOffer(@Valid AddOfferDTO addOfferModel,
                            BindingResult bindingResult,
-                           RedirectAttributes redirectAttributes) {
+                           RedirectAttributes redirectAttributes,
+                           @AuthenticationPrincipal UserDetails userDetails) {
 
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("addOfferModel", addOfferModel);
-            redirectAttributes.addFlashAttribute(
-                    "org.springframework.validation.BindingResult.addOfferModel", bindingResult);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.addOfferModel",
+                    bindingResult);
             return "redirect:/offers/add";
         }
 
-        offerService.addOffer(addOfferModel);
+        offerService.addOffer(addOfferModel, userDetails);
 
-       return "redirect:/offers/all";
+        return "redirect:/offers/all";
     }
 }

@@ -25,6 +25,12 @@ public class AddOfferDTO {
     @NotNull
     private Integer year;
 
+    @Positive
+    @NotNull
+    private Integer mileage;
+
+    @NotNull
+    private String imageURL;
     public Integer getPrice() {
         return price;
     }
@@ -54,9 +60,6 @@ public class AddOfferDTO {
 
     @NotEmpty
     private String description;
-
-    @NotEmpty
-    private String imageURL;
     @NotNull
     private TransmissionEnum transmission;
 
@@ -68,16 +71,6 @@ public class AddOfferDTO {
         this.engine = engine;
         return this;
     }
-
-    public String getImageURL() {
-        return imageURL;
-    }
-
-    public AddOfferDTO setImageURL(String imageURL) {
-        this.imageURL = imageURL;
-        return this;
-    }
-
     public TransmissionEnum getTransmission() {
         return transmission;
     }
@@ -93,6 +86,24 @@ public class AddOfferDTO {
 
     public AddOfferDTO setModelId(Long modelId) {
         this.modelId = modelId;
+        return this;
+    }
+
+    public Integer getMileage() {
+        return mileage;
+    }
+
+    public AddOfferDTO setMileage(Integer mileage) {
+        this.mileage = mileage;
+        return this;
+    }
+
+    public String getImageURL() {
+        return imageURL;
+    }
+
+    public AddOfferDTO setImageURL(String imageURL) {
+        this.imageURL = imageURL;
         return this;
     }
 }

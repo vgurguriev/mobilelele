@@ -3,7 +3,7 @@
       xmlns:th="http://www.thymeleaf.org">
 
 <head>
-      <meta charset="UTF-8">
+    <meta charset="UTF-8">
     <title>MobiLeLeLe</title>
     <link rel="stylesheet" href="/css/reset-css.css"/>
     <link rel="stylesheet" href="/css/bootstrap.min.css"/>
@@ -18,9 +18,9 @@
 
 <div class="container">
     <h2 class="text-center text-white">Register User</h2>
-    <form   th:action="@{/users/register}"
-            th:method="post"
-            th:object="${userModel}"
+    <form th:action="@{/users/register}"
+          th:method="post"
+          th:object="${userModel}"
           class="main-form mx-auto col-md-8 d-flex flex-column justify-content-center">
         <div class="row">
             <div class="form-group col-md-6 mb-3">
@@ -31,7 +31,7 @@
                         th:errorclass="is-invalid"
                         type="text"
                         class="form-control"
-                       placeholder="First name"/>
+                        placeholder="First name"/>
                 <p class="invalid-feedback errors alert alert-danger">
                     First name is required.
                 </p>
@@ -51,7 +51,7 @@
         </div>
         <div class="row">
             <div class="form-group col-md-6 mb-3">
-                <label for="email" class="text-white font-weight-bold">Username</label>
+                <label for="email" class="text-white font-weight-bold">Email</label>
                 <input id="email"
                        th:field="*{email}"
                        th:errorclass="is-invalid"
@@ -60,15 +60,15 @@
                        placeholder="Email"/>
                 <div class="invalid-feedback errors alert alert-danger">
                     <div
-                        th:each="err : ${#fields.errors('email')}"
-                        th:text="${err}"
-                        />
+                            th:each="err : ${#fields.errors('email')}"
+                            th:text="${err}"
+                    />
                 </div>
             </div>
             <div class="form-group col-md-6 mb-3">
                 <label for="password" class="text-white font-weight-bold">Password</label>
                 <input id="password"
-                           th:field="*{password}"
+                       th:field="*{password}"
                        th:errorclass="is-invalid"
                        type="password"
                        class="form-control"
@@ -102,7 +102,7 @@
 </div>
 
 <div>
-     <footer> </footer>
+    <footer></footer>
 </div>
 
 </body>

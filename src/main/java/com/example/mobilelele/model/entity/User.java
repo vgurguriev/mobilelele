@@ -28,7 +28,7 @@ public class User extends BaseEntity {
     private List<UserRole> userRoles = new ArrayList<>();
 
     public String getEmail() {
-        return email;
+        return this.email;
     }
 
     public User setEmail(String email) {

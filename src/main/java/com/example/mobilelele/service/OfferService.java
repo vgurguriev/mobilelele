@@ -8,7 +8,7 @@ import com.example.mobilelele.model.mapper.OfferMapper;
 import com.example.mobilelele.repository.ModelRepository;
 import com.example.mobilelele.repository.OfferRepository;
 import com.example.mobilelele.repository.UserRepository;
-import com.example.mobilelele.user.CurrentUser;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -17,21 +17,22 @@ public class OfferService {
     private final OfferRepository offerRepository;
     private final UserRepository userRepository;
     private final ModelRepository modelRepository;
-    private final CurrentUser currentUser;
 
-    public OfferService(OfferMapper offerMapper, OfferRepository offerRepository, UserRepository userRepository, ModelRepository modelRepository, CurrentUser currentUser) {
+    public OfferService(OfferMapper offerMapper,
+                        OfferRepository offerRepository,
+                        UserRepository userRepository,
+                        ModelRepository modelRepository) {
         this.offerMapper = offerMapper;
         this.offerRepository = offerRepository;
         this.userRepository = userRepository;
         this.modelRepository = modelRepository;
-        this.currentUser = currentUser;
     }
 
-    public void addOffer(AddOfferDTO addOfferDTO) {
+    public void addOffer(AddOfferDTO addOfferDTO, UserDetails userDetails) {
         Offer newOffer = offerMapper.offerDtoToOfferEntity(addOfferDTO);
 
         User seller = this.userRepository
-                .findByEmail(currentUser.getEmail()).orElseThrow();
+                .findByEmail(userDetails.getUsername()).orElseThrow();
 
         Model model = this.modelRepository
                 .findById(addOfferDTO.getModelId()).orElseThrow();

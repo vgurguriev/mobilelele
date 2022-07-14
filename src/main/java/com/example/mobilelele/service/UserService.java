@@ -1,34 +1,33 @@
 package com.example.mobilelele.service;
 
-import com.example.mobilelele.model.dto.UserLoginDTO;
 import com.example.mobilelele.model.dto.UserRegisterDTO;
 import com.example.mobilelele.model.entity.User;
 import com.example.mobilelele.model.mapper.UserMapper;
 import com.example.mobilelele.repository.UserRepository;
-
-import com.example.mobilelele.user.CurrentUser;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 
 @Service
 public class UserService {
-    private Logger LOGGER = LoggerFactory.getLogger(UserService.class);
-    private UserRepository userRepository;
-    private CurrentUser currentUser;
+    private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-
     private final UserMapper userMapper;
+    private final UserDetailsService userDetailsService;
 
-    public UserService(UserRepository userRepository, CurrentUser currentUser, PasswordEncoder passwordEncoder, UserMapper userMapper) {
+    public UserService(UserRepository userRepository,
+                       PasswordEncoder passwordEncoder,
+                       UserMapper userMapper,
+                       UserDetailsService userDetailsService) {
         this.userRepository = userRepository;
-        this.currentUser = currentUser;
         this.passwordEncoder = passwordEncoder;
         this.userMapper = userMapper;
+        this.userDetailsService = userDetailsService;
     }
 
     public void registerAndLogin(UserRegisterDTO userRegisterDTO) {
@@ -39,39 +38,19 @@ public class UserService {
 
         login(newUser);
     }
-
-    public boolean login(UserLoginDTO userLoginDTO) {
-        Optional<User> userOpt = this.userRepository
-                .findByEmail(userLoginDTO.getUsername());
-
-        if (userOpt.isEmpty()) {
-            LOGGER.info("User with name [{}] not found", userLoginDTO.getUsername());
-            return false;
-        }
-        var rawPassword = userLoginDTO.getPassword();
-        var encodedPassword = userOpt.get().getPassword();
-
-        boolean success = passwordEncoder
-                .matches(rawPassword, encodedPassword);
-
-        if (success) {
-            login(userOpt.get());
-        } else {
-            logout();
-        }
-
-        return success;
-    }
-
     private void login(User user) {
-        currentUser
-                .setLoggedIn(true);
-        currentUser
-                .setName(user.getFirstName() + " " + user.getLastName());
-        currentUser.setEmail(user.getEmail());
-    }
+        UserDetails userDetails =
+                userDetailsService.loadUserByUsername(user.getEmail());
 
-    public void logout() {
-        currentUser.clear();
+        Authentication auth =
+                new UsernamePasswordAuthenticationToken(
+                        userDetails,
+                        userDetails.getPassword(),
+                        userDetails.getAuthorities()
+                );
+
+        SecurityContextHolder.
+                getContext().
+                setAuthentication(auth);
     }
 }
